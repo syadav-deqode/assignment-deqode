@@ -1,0 +1,21 @@
+{
+  "name": "assignment-deqode",
+  "version": "1.0.0",
+  "description": "A simple app that stores the users in fs.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "Assignment",
+    "Express",
+    "fs"
+  ],
+  "author": "Sumit Yadav",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1"
+  }
+}
