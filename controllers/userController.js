@@ -1,4 +1,7 @@
+const userService = require('../services/userService')
+
 module.exports.testRoute=(req,res,next)=>{
-res.json({msg:"Hello world! Test route"})
+const {greet} = userService.testRoute()
+res.json(greet)
 next()
 }
