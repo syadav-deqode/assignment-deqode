@@ -10,3 +10,7 @@ const asyncHandler = fn => (req,res,next)=>{
 const userController = require('../controllers/userController');
 
 router.get('/test',asyncHandler.testRoute)
+// Add user
+router.post('/', asyncHandler(userController.addUser))
+
+module.exports = router
