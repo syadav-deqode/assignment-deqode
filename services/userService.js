@@ -2,8 +2,8 @@ const fs = require('fs')
 const path = require('path')
 
 module.exports.testRoute = () => {
-  const greet = {msg:"Hello, Test route working!"} 
-  return {greet}
+  const greet = { msg: "Hello, Test route working!" }
+  return { greet }
 }
 
 module.exports.addUser = (body) => {
@@ -15,14 +15,14 @@ module.exports.addUser = (body) => {
   const users = fs.readFileSync(filePath, 'utf-8')
   // Will return null if not found
   const parsedUser = this.parseJson(users)
-  if(!parsedUser){
+  if (!parsedUser) {
     // Add new user
     let obj = { users: [] };
     obj.users.push({ id: 1, email });
     const newUser = this.stringifyJson(obj)
     this.writeInFile(filePath, stringData)
     returnObj = { ...returnObj, success: true, message: "New user added" }
-  }else{
+  } else {
     // Check file have some users or not
     const found_emails = parsedUser.users.filter(u => u.email === email);
     if (found_emails.length <= 0) {
@@ -69,4 +69,14 @@ module.exports.getUsers = () => {
   // Will return null if not found
   const parsedUser = this.parseJson(users)
   return { users: parsedUser }
+}
+
+module.exports.getUserById = (id) => {
+  const filePath = path.join(__base, '/users/' + 'users.json').toString()
+  const users = fs.readFileSync(filePath, 'utf-8')
+  // Will return null if not found
+  const parsedUser = this.parseJson(users)
+  // Filter the id
+  const found_user = parsedUser.users.filter(u => u.id == id);
+  return { user: found_user }
 }

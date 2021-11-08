@@ -14,5 +14,7 @@ router.get('/test',asyncHandler.testRoute)
 router.post('/', asyncHandler(userController.addUser))
 // Get all the users
 router.get('/', asyncHandler(userController.getUsers))
+// Get user by id
+router.get('/:id', asyncHandler(userController.getUserById))
 
 module.exports = router
