@@ -8,4 +8,7 @@ global.__base=__dirname
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
+// Routes
+app.use('/users',require("./routes/user"));
+
 app.listen(port,()=>console.log(`Server started at port  ${port}`));
