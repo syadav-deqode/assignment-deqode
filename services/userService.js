@@ -19,23 +19,27 @@ module.exports.addUser = (body) => {
     // Add new user
     let obj = { users: [] };
     obj.users.push({ id: 1, email });
-    const newUser = this.stringifyJson(obj)
+    const stringData = this.stringifyJson(obj)
     this.writeInFile(filePath, stringData)
     returnObj = { ...returnObj, success: true, message: "New user added" }
   } else {
     // Check file have some users or not
-    const found_emails = parsedUser.users.filter(u => u.email === email);
+    const found_emails = parsedUser.users.filter(v => v.email === email);
     if (found_emails.length <= 0) {
+      // Get the last user from users
+      const lastUser = parsedUser.users[parsedUser.users.length - 1]
+      const id = lastUser.id
       // Add new user object
-      const u = { id: parsedUser.users.length + 1, email }
+      const u = { id: id + 1, email }
       parsedUser.users.push(u)
-      const stringData = this.stringifyJson(parsedUser)
+      const stringData = JSON.stringify(parsedUser);
       this.writeInFile(filePath, stringData)
       returnObj = { ...returnObj, success: true, message: "New user added" }
     } else {
       returnObj = { ...returnObj, error: true, message: "Email already in use" }
     }
   }
+  return { user: returnObj }
 }
 
 module.exports.parseJson = (stringify) => {
@@ -72,13 +76,21 @@ module.exports.getUsers = () => {
 }
 
 module.exports.getUserById = (id) => {
+  let returnObj = { error: null, success: null, message: null, user: null }
+
   const filePath = path.join(__base, '/users/' + 'users.json').toString()
   const users = fs.readFileSync(filePath, 'utf-8')
   // Will return null if not found
   const parsedUser = this.parseJson(users)
   // Filter the id
-  const found_user = parsedUser.users.filter(u => u.id == id);
-  return { user: found_user }
+  const found_user = parsedUser.users.filter(v => v.id == id);
+
+  if (found_user && found_user.length <= 0) {
+    returnObj = { ...returnObj, success: true, message: "Requested user id not found" }
+  } else {
+    returnObj = { ...returnObj, success: true, message: "Requested user details.", user: found_user[0] }
+  }
+  return { user: returnObj }
 }
 
 module.exports.deleteUser = (id) => {
