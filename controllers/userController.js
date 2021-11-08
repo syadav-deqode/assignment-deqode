@@ -24,3 +24,10 @@ module.exports.getUserById = async (req, res, next) => {
   res.status(200).json(user)
   next()
 }
+
+module.exports.deleteUser = async (req, res, next) => {
+  const { id } = req.params
+  const { user } = userService.deleteUser(id)
+  res.status(200).json(user)
+  next()
+}

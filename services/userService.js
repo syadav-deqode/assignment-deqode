@@ -80,3 +80,19 @@ module.exports.getUserById = (id) => {
   const found_user = parsedUser.users.filter(u => u.id == id);
   return { user: found_user }
 }
+
+module.exports.deleteUser = (id) => {
+  const filePath = path.join(__base, '/users/' + 'users.json').toString()
+  const users = fs.readFileSync(filePath, 'utf-8')
+  // Will return null if not found
+  const parsedUser = this.parseJson(users)
+  // Filter the id
+  const remained_users = parsedUser.users.filter(v => v.id != id);
+  // Set the remaining array to the objet
+  parsedUser.users = remained_users
+  // parse and Write to file
+  const stringData = this.stringifyJson(parsedUser);
+  this.writeInFile(filePath, stringData)
+  const remove_payload = { error: null, msg: "Requested id removed" }
+  return { user: remove_payload }
+}
