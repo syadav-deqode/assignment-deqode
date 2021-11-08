@@ -7,6 +7,6 @@ const asyncHandler = fn => (req,res,next)=>{
   .catch(next)
 } 
 
-router.get('/test',(req,res)=>{
-res.json({msg:"hello world"});
-})
+const userController = require('../controllers/userController');
+
+router.get('/test',asyncHandler.testRoute)
