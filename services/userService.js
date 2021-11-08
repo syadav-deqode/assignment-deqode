@@ -62,3 +62,11 @@ module.exports.writeInFile = (filePath, data) => {
   fs.writeFileSync(filePath, data, 'utf-8');
   return "Data added"
 }
+
+module.exports.getUsers = () => {
+  const filePath = path.join(__base, '/users/' + 'users.json').toString()
+  const users = fs.readFileSync(filePath, 'utf-8')
+  // Will return null if not found
+  const parsedUser = this.parseJson(users)
+  return { users: parsedUser }
+}

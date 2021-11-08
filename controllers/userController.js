@@ -11,3 +11,9 @@ module.exports.addUser = async (req, res, next) => {
   res.status(200).json(user)
   next()
 }
+
+module.exports.getUsers = async (req, res, next) => {
+  const { users } = userService.getUsers()
+  res.status(200).json(users)
+  next()
+}
