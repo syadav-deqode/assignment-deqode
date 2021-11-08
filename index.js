@@ -4,6 +4,7 @@ const app = express();
 const port = process.env.PORT || 5500;
 
 global.__base=__dirname
+// Body-parser configuration
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
